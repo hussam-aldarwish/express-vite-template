@@ -1,6 +1,5 @@
 import { build } from 'vite';
 import esbuild from 'esbuild';
-import packageJson from '../package.json' assert { type: 'json' };
 
 // build the client
 await build();
@@ -10,8 +9,10 @@ await esbuild.build({
   entryPoints: ['src/server/main.js'],
   bundle: true,
   platform: 'node',
-  target: 'node14',
+  target: 'node16',
   outdir: 'dist/server',
-  external: Object.keys({ ...packageJson.dependencies }),
   minify: true,
+  packages: 'external',
+  format: 'esm',
+  splitting: true,
 });

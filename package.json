@@ -7,6 +7,7 @@
     "node": ">=16.0.0",
     "npm": ">=7.0.0"
   },
+  "main": "dist/server/main.js",
   "scripts": {
     "prepare": "husky install",
     "dev:client": "vite",
@@ -17,7 +18,8 @@
     "lint:stylelint": "stylelint \"**/*.css\"",
     "lint": "run-s lint:*",
     "build": "node scripts/build.js",
-    "test": "npm run lint"
+    "test": "npm run lint",
+    "start": "node -r dotenv-flow/config ."
   },
   "dependencies": {
     "dotenv-flow": "^3.2.0",
