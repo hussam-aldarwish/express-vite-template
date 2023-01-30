@@ -12,8 +12,8 @@
     "lint:eslint": "eslint .",
     "lint:stylelint": "stylelint \"**/*.css\"",
     "lint": "run-s lint:*",
-    "test": "npm run lint",
-    "build": "vite build"
+    "build": "node scripts/build.js",
+    "test": "npm run lint"
   },
   "dependencies": {
     "dotenv-flow": "^3.2.0",
@@ -22,9 +22,12 @@
     "react-dom": "^18.2.0"
   },
   "devDependencies": {
+    "@babel/eslint-parser": "^7.19.1",
+    "@babel/plugin-syntax-import-assertions": "^7.20.0",
     "@types/react": "^18.0.26",
     "@types/react-dom": "^18.0.9",
     "@vitejs/plugin-react-swc": "^3.0.0",
+    "esbuild": "^0.17.5",
     "eslint": "^8.33.0",
     "eslint-config-prettier": "^8.6.0",
     "eslint-plugin-react": "^7.32.2",
