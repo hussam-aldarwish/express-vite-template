@@ -1,5 +1,5 @@
 {
-  "name": "vite-template",
+  "name": "express-vite-template",
   "private": true,
   "version": "0.0.0",
   "type": "module",
