@@ -4,21 +4,20 @@ import path from 'node:path';
 import compression from 'compression';
 import cookieParser from 'cookie-parser';
 import logger from 'morgan';
+import { usePathFromURL } from './hooks.js';
 
-/**
- * @type {function fetch(url: RequestInfo, init?: RequestInit): Promise<Response>}
- */
 let fetch;
 let vitePort;
 const { COOKIE_SECRET = 'secret', NODE_ENV, PORT = 3000 } = process.env;
 const isDevelopment = NODE_ENV !== 'production';
-const distPath = path.resolve('dist/client');
+const { __dirname } = usePathFromURL(import.meta.url);
 
 if (isDevelopment) {
   fetch = (await import('node-fetch')).default;
-  const vite = (await import('vite')).createServer({
+  const vite = await (
+    await import('vite')
+  ).createServer({
     clearScreen: false,
-    configFile: 'vite.config.js',
   });
   await vite.listen();
   vitePort = vite.config.server.port;
@@ -53,7 +52,7 @@ if (isDevelopment) {
     } else next();
   });
 } else {
-  app.use(express.static(distPath));
+  app.use(express.static(path.resolve(__dirname, '../client')));
 }
 app.use('/api', apiRouter);
 if (isDevelopment) {
@@ -71,7 +70,7 @@ if (isDevelopment) {
   });
 } else {
   app.use('*', (_, res) => {
-    res.sendFile(path.resolve(distPath, 'index.html'));
+    res.sendFile(path.resolve(__dirname, '../client/index.html'));
   });
 }
 
