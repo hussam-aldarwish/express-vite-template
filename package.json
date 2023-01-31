@@ -15,7 +15,9 @@
     "lint:eslint": "eslint .",
     "lint:stylelint": "stylelint \"**/*.css\"",
     "lint": "run-s lint:*",
-    "build": "node scripts/build.js",
+    "build:client": "vite build --mode production",
+    "build:server": "esbuild --bundle --platform=node --target=node16 --minify --packages=external --format=esm --splitting --outdir=dist/server src/server/main.js",
+    "build": "run-s build:*",
     "test": "npm run lint",
     "start": "node -r dotenv-flow/config ."
   },

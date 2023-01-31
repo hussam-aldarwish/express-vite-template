@@ -10,7 +10,9 @@ server.on('listening', onListening);
 function onListening() {
   const addr = server.address();
   const bind =
-    typeof addr === 'string' ? 'pipe ' + addr.address : 'port ' + port;
+    typeof addr === 'string'
+      ? 'pipe ' + addr.address
+      : 'http://localhost:' + addr.port;
   const env = process.env.NODE_ENV || 'development';
   console.log('Listening on ' + bind + ' in ' + env + ' mode 🚀');
 }
