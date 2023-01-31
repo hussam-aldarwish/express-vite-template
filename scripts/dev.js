@@ -30,6 +30,7 @@ app._router.stack = [
   ...app._router.stack.slice(2),
 ];
 
+app._router.stack.pop();
 app.get('/*', (req, res, next) => {
   if (req.path.match(/\.\w+$/)) return next();
   fetch(`http://localhost:${vitePort}`)

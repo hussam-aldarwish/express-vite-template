@@ -1,24 +1,34 @@
 import express from 'express';
 import apiRouter from './api.js';
 import path from 'node:path';
+import compression from 'compression';
+import cookieParser from 'cookie-parser';
+import logger from 'morgan';
 
-const { NODE_ENV, PORT = 3000 } = process.env;
+const { COOKIE_SECRET, NODE_ENV, PORT = 3000 } = process.env;
 const isProduction = NODE_ENV === 'production';
 
 const app = express();
 app.set('port', normalizePort(PORT));
 
 if (isProduction) {
-  app.use(express.static(path.resolve('dist/client')));
+  app.use(compression());
 }
-
+app.use(
+  logger('dev', {
+    skip: function (_, res) {
+      return res.statusCode < 400;
+    },
+  })
+);
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+app.use(cookieParser(COOKIE_SECRET || 'secret'));
+app.use(express.static(path.resolve('dist/client')));
 app.use('/api', apiRouter);
-
-if (isProduction) {
-  app.use('*', (_, res) => {
-    res.sendFile(path.resolve('dist/client/index.html'));
-  });
-}
+app.use('*', (_, res) => {
+  res.sendFile(path.resolve('dist/client/index.html'));
+});
 
 export default app;
 
