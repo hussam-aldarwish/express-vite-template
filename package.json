@@ -7,7 +7,7 @@
     "node": ">=16.0.0",
     "npm": ">=7.0.0"
   },
-  "main": "src/server/main.js",
+  "main": "dist/server/main.js",
   "scripts": {
     "prepare": "husky install",
     "dev": "nodemon",
@@ -15,7 +15,9 @@
     "lint:eslint": "eslint .",
     "lint:stylelint": "stylelint \"**/*.css\"",
     "lint": "run-s lint:*",
-    "build": "vite build --mode production",
+    "build:client": "vite build",
+    "build:server": "esbuild src/server/main.js --bundle --platform=node --target=node16 --minify --packages=external --format=esm --splitting --outdir=dist/server",
+    "build": "run-s build:*",
     "test": "npm run lint",
     "start": "node -r dotenv-flow/config .",
     "preview": "cross-env NODE_ENV=production npm start"
@@ -32,6 +34,7 @@
     "@types/react-dom": "^18.0.9",
     "@vitejs/plugin-react-swc": "^3.0.0",
     "cross-env": "^7.0.3",
+    "esbuild": "^0.17.5",
     "eslint": "^8.33.0",
     "eslint-config-prettier": "^8.6.0",
     "eslint-plugin-react": "^7.32.2",

@@ -36,7 +36,9 @@ if (isDevelopment) {
   });
 } else {
   app.use((await import('compression')).default());
-  app.use(express.static(path.resolve(__dirname, '../../dist')));
+  app.use(
+    express.static(path.resolve(__dirname, '../client'), { index: false })
+  );
 }
 
 app.use(logger('dev', { skip: (_, res) => res.statusCode < 400 }));
@@ -58,7 +60,7 @@ app.use('*', (req, res, next) => {
         )
       )
       .then((content) => res.header('Content-Type', 'text/html').send(content));
-  } else res.sendFile(path.resolve(__dirname, '../../dist/index.html'));
+  } else res.sendFile(path.resolve(__dirname, '../client/index.html'));
 });
 
 export default app;
