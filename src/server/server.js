@@ -8,12 +8,12 @@ server.on('error', onError);
 server.on('listening', onListening);
 
 function onListening() {
-  const addr = server.address();
+  const address = server.address();
   const bind =
     typeof addr === 'string'
-      ? 'pipe ' + addr.address
-      : 'http://localhost:' + addr.port;
-  const env = process.env.NODE_ENV || 'development';
+      ? 'pipe ' + address
+      : 'http://localhost:' + address.port;
+  const env = process.env.NODE_ENV;
   console.log('Listening on ' + bind + ' in ' + env + ' mode 🚀');
 }
 

@@ -5,7 +5,7 @@ import cookieParser from 'cookie-parser';
 import logger from 'morgan';
 import { usePathFromURL } from './hooks.js';
 
-const { COOKIE_SECRET = 'secret', NODE_ENV, PORT = 3000 } = process.env;
+const { COOKIE_SECRET = 'secret', NODE_ENV, PORT = '3000' } = process.env;
 const isDevelopment = NODE_ENV !== 'production';
 const { __dirname } = usePathFromURL(import.meta.url);
 
